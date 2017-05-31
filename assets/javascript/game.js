@@ -8,72 +8,25 @@ $(document).ready(function(){
     
     
     var LandDiv;
-    
-   
-
-
-
+  
     var pb={name:"Princesss BubbleGum",life:100,power:40, src1: "assets/images/pb1.png",src2:"assets/images/pbFSm.png", 
-    weaponSrc: "assets/images/pbWeap.png",
-    attack:function(){
-        console.log("ppooop");
-        $("#playerWeap").animate({left: "100vw" }, 1000);
-        },
-    counter:function(){
-        console.log("pplllooop");
-        $("#oppWeap").animate({left: "-100vw" }, 1000);
-        }
-    };
+    weaponSrc: "assets/images/pbWeap.png",};
+    
     var fin={name:"Finn",life:200,power:10, src1: "assets/images/fin1.png",src2:"assets/images/finFSm.png",
-    weaponSrc: "assets/images/finWeap.png",
-    attack:function(){
-        $("#playerWeap").animate({left: "100vw" }, 1000);
-        },
-    counter:function(){
-        console.log("ppooop");
-        $("#oppWeap").animate({left: "-100vw" }, 1000);
-        }
-    };
+    weaponSrc: "assets/images/finWeap.png" };
+   
     var jake={name:"Jake",life:120,power:20, src1: "assets/images/jake1.png",src2:"assets/images/jakeFSm.png",
-    weaponSrc: "assets/images/jakeWeap.png",
-    attack:function(){
-        $("#playerWeap").animate({left: "100vw" }, 1000);
-        },
-    counter:function(){
-        console.log("ppooop");
-        $("#oppWeap").animate({left: "-100vw" }, 1000);
-        }
-    };
+    weaponSrc: "assets/images/jakeWeap.png" };
+   
     var marcy={name:"Marceline",life:50,power:60, src1: "assets/images/marcy1.png",src2:"assets/images/marcyFSm.png",
-    weaponSrc: "assets/images/marcyWeap.png",
-    attack:function(){
-        $("#playerWeap").animate({left: "100vw" }, 1000);
-        },
-    counter:function(){
-        console.log("ppooop");
-        $("#oppWeap").animate({left: "-100vw" }, 1000);
-        }
-    };
+    weaponSrc: "assets/images/marcyWeap.png" };
+   
     var ice={name:"Ice King",life:250,power:5, src1: "assets/images/ice1.png",src2:"assets/images/iceFSm.png",
-    weaponSrc: "assets/images/iceWeap.png",
-    attack:function(){
-        $("#playerWeap").animate({left: "100vw" }, 1000);
-        },
-    counter:function(){
-        console.log("ppooop");
-        $("#oppWeap").animate({left: "-100vw" }, 1000);
-        }
-    };
+    weaponSrc: "assets/images/iceWeap.png" };
+   
     var pbut={name:"Peppermint Butler",life:10,power:90, src1: "assets/images/pbut1.png",src2:"assets/images/pbutFSm.png",
-    weaponSrc: "assets/images/pbutWeap.png",
-    attack:function(){
-        $("#playerWeap").animate({left: "100vw" }, 1000);
-        },
-    counter:function(){
-        console.log("ppooop");
-        $("#oppWeap").animate({left: "-100vw" }, 1000);
-        }
-    };
+    weaponSrc: "assets/images/pbutWeap.png" };
+    
     
     //add attack functions to objects & images perhaps
 
@@ -125,6 +78,7 @@ $(document).ready(function(){
         $('#begin').remove();
         
         $('.preFightDiv').off('click');
+        $("#titl").html("");
         newRound(); 
 
     
@@ -142,7 +96,7 @@ $(document).ready(function(){
     function newRound(){
 
         $("#remainTitle").html("CHOOSE AN OPPONENT");
-        $("h1").html("Your Character is "+pObj.name);
+        $("h1").append("<p class='no-margin'>Your Character is "+pObj.name+ "</p><p class='no-margin'>Power="+pObj.power+ " Life="+pObj.life+"</p>");
         $('.preFightDiv').on('click', function () {
                 opp=this.id;
                 chooseOpp();
@@ -159,9 +113,7 @@ $(document).ready(function(){
         $('#'+opp).remove();
         $('.preFightDiv').off('click');
         
-        
-        
-        $('#remainTitle').html("OPPONENTS REMAINING");
+       $('#remainTitle').html("OPPONENTS REMAINING");
         setUp();
 
 
@@ -228,7 +180,11 @@ $(document).ready(function(){
 
     }
     function attackOpp(){
-        
+        $("#fightButt").attr('disabled', true);
+        setTimeout(function(){
+            $("#fightButt").attr('disabled', false);
+        }, 6000);
+        $("#lifePlayer").css("background-color", "white");
         $("#playerWeap").remove();
         $("#oppWeap").remove();
         $("#chosenFighter").append('<img id="playerWeap" src='+pObj.weaponSrc+' />');
@@ -240,7 +196,9 @@ $(document).ready(function(){
         $("#chosenP").attr('src',pObj.src2);
         $("#playerWeap").animate({ opacity: "1" });
         
-        pObj.attack();
+        attack();
+
+
 
         var playerAttack = setTimeout(function() {
           $("#chosenP").attr('src',pObj.src1);
@@ -281,7 +239,7 @@ $(document).ready(function(){
         $("#lifeOpp").css("background-color", "white");
         $("#powerPlayer").css("background-color", "white");
         $("#oppWeap").animate({ opacity: "1" });
-        oppObj.counter();
+        counter();
         $("#chosenO").attr('src',oppObj.src2);
         var oppAttack = setTimeout(function() {
           $("#chosenO").attr('src',oppObj.src1);
@@ -291,19 +249,32 @@ $(document).ready(function(){
         updateStats(pObj,"Player");
         updateStats(oppObj,"Opp");
         setTimeout(function(){
+            $("#lifePlayer").css("background-color", "red");
+        });
+        setTimeout(function(){
             if(pObj.life<=0){
             lose();
             };
-        $("#lifePlayer").css("background-color", "red");
-
         }, 3000);
         
     }
+
+    function attack(){
+        console.log("ppooop");
+        $("#playerWeap").animate({left: "100vw" }, 1000);
+        };
+    function counter(){
+        console.log("pplllooop");
+        $("#oppWeap").animate({left: "-100vw" }, 1000);
+        };
+    
+
     function clearOut(){
         console.log('clear');
-        $("#titl").html("YOU WON THIS ROUND");
+        $("#defeatTitle").html("DEFEATED OPPONENTS");
+        $("#containerDefeated").append("<img class='defeated' src="+oppObj.src1+" />")
+        $("#titl").html("YOU BEAT "+(oppObj.name));
         $("#containerFight").remove();
-        $($)
         round++;
         newRound();
      };
