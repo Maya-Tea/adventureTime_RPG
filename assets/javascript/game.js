@@ -5,39 +5,48 @@ $(document).ready(function(){
     var oldSrc;
     var beginDiv;
     var round=1;
+    var originalPower;
     
     
     var LandDiv;
   
-    var pb={name:"Princesss BubbleGum",life:100,power:40, src1: "assets/images/pb1.png",src2:"assets/images/pbFSm.png", 
+    var pb={name:"Princesss BubbleGum",life:170,power:15, src1: "assets/images/pb1.png",src2:"assets/images/pbFSm.png", 
     weaponSrc: "assets/images/pbWeap.png",};
     
-    var fin={name:"Finn",life:200,power:10, src1: "assets/images/fin1.png",src2:"assets/images/finFSm.png",
+    var fin={name:"Finn",life:220,power:10, src1: "assets/images/fin1.png",src2:"assets/images/finFSm.png",
     weaponSrc: "assets/images/finWeap.png" };
    
-    var jake={name:"Jake",life:120,power:20, src1: "assets/images/jake1.png",src2:"assets/images/jakeFSm.png",
+    var jake={name:"Jake",life:150,power:20, src1: "assets/images/jake1.png",src2:"assets/images/jakeFSm.png",
     weaponSrc: "assets/images/jakeWeap.png" };
    
-    var marcy={name:"Marceline",life:50,power:60, src1: "assets/images/marcy1.png",src2:"assets/images/marcyFSm.png",
+    var marcy={name:"Marceline",life:140,power:25, src1: "assets/images/marcy1.png",src2:"assets/images/marcyFSm.png",
     weaponSrc: "assets/images/marcyWeap.png" };
    
-    var ice={name:"Ice King",life:250,power:5, src1: "assets/images/ice1.png",src2:"assets/images/iceFSm.png",
+    var ice={name:"Ice King",life:350,power:5, src1: "assets/images/ice1.png",src2:"assets/images/iceFSm.png",
     weaponSrc: "assets/images/iceWeap.png" };
    
-    var pbut={name:"Peppermint Butler",life:10,power:90, src1: "assets/images/pbut1.png",src2:"assets/images/pbutFSm.png",
+    var pbut={name:"Peppermint Butler",life:130,power:30, src1: "assets/images/pbut1.png",src2:"assets/images/pbutFSm.png",
     weaponSrc: "assets/images/pbutWeap.png" };
+
+
     
     
     //add attack functions to objects & images perhaps
 
     var playersObjA=[fin,jake,pb,marcy,ice,pbut];
     var playersA=["fin","jake","pb","marcy","ice","pbut"];
+    var labelName=["Finn","Jake", "P. Bubble", "Marceline","Ice King", "P.Butler"]
     var playersAvailableA=["fin","jake","pb","marcy","ice","pbut"];
     var refNum;
     var pObj;
     var oppObj;
     //console.log(playersObjA[2].name);
-
+    for(var i=0; i<playersA.length; i++){
+        var labelText="<p class='charLabel'><span class='name'>"+labelName[i]+
+        "</span><span class='life'> Life="+playersObjA[i].life+
+        " Power="+playersObjA[i].power+ "</span></p>";
+        $("#"+playersA[i]).append(labelText);
+    }
 
     $( ".preFightDiv" ).mouseenter(function(){
         pic=$("#"+this.id+"1");
@@ -65,6 +74,7 @@ $(document).ready(function(){
         player=p;
         chooseRefNum(player);
         pObj=playersObjA[refNum];
+        originalPower=pObj.power;
               
         test();
                    
@@ -94,7 +104,7 @@ $(document).ready(function(){
 
     }
     function newRound(){
-
+        $('.preFightDiv').off('click');
         $("#remainTitle").html("CHOOSE AN OPPONENT");
         $("h1").append("<p class='no-margin'>Your Character is "+pObj.name+ "</p><p class='no-margin'>Power="+pObj.power+ " Life="+pObj.life+"</p>");
         $('.preFightDiv').on('click', function () {
@@ -183,38 +193,53 @@ $(document).ready(function(){
         $("#fightButt").attr('disabled', true);
         setTimeout(function(){
             $("#fightButt").attr('disabled', false);
-        }, 6000);
+        }, 3000);
         $("#lifePlayer").css("background-color", "white");
+        $("#lifeOpp").css("background-color", "white");
+        $("#powerPlayer").css("background-color", "white");
         $("#playerWeap").remove();
         $("#oppWeap").remove();
         $("#chosenFighter").append('<img id="playerWeap" src='+pObj.weaponSrc+' />');
         $("#chosenOpponent").append('<img id="oppWeap" src='+oppObj.weaponSrc+' />');
         //player Attacks
         oppObj.life=oppObj.life-pObj.power;
-        pObj.power+=pObj.power;
+        pObj.power=pObj.power+originalPower;
+        pObj.life=pObj.life-oppObj.power;
        
         $("#chosenP").attr('src',pObj.src2);
+        $("#chosenO").attr('src',oppObj.src2);
+        $("#oppWeap").animate({ opacity: "1" });
         $("#playerWeap").animate({ opacity: "1" });
         
         attack();
+        counter();
 
 
 
         var playerAttack = setTimeout(function() {
           $("#chosenP").attr('src',pObj.src1);
+          $("#chosenO").attr('src',oppObj.src1);
         }, 3000);
 
-        updateStats(pObj,"Player");
-        updateStats(oppObj,"Opp");
+        
 
         setTimeout(function(){
             $("#lifeOpp").css("background-color", "red");
-           $("#powerPlayer").css("background-color", "lightblue"); 
+            $("#powerPlayer").css("background-color", "lightblue");
+            $("#lifePlayer").css("background-color", "red");
+            updateStats(pObj,"Player");
+            updateStats(oppObj,"Opp");
        }, 2000);
-        console.log(playersAvailableA);
-        
-        setTimeout(function(){
-          
+
+        //console.log(playersAvailableA);
+        // if(pObj.life==0||oppObj.life==0){
+        //     $("#fightButt").attr('disabled', true);
+
+        // }
+        //setTimeout(function(){
+            if(pObj.life<=0){
+                lose();
+            };
             if(oppObj.life<=0&&pObj.life>0){
                 if(playersAvailableA.length==0){
                     win();
@@ -223,41 +248,17 @@ $(document).ready(function(){
                     clearOut();
                 };
             
-            }
-            if(pObj.life>0&&oppObj.life>0){
-                    defend();
-            }
+            };
+            
 
-        },3000);
+        //},4000);
 
            
         
         
         
     }
-    function defend(){
-        $("#lifeOpp").css("background-color", "white");
-        $("#powerPlayer").css("background-color", "white");
-        $("#oppWeap").animate({ opacity: "1" });
-        counter();
-        $("#chosenO").attr('src',oppObj.src2);
-        var oppAttack = setTimeout(function() {
-          $("#chosenO").attr('src',oppObj.src1);
-        }, 3000);
-        
-        pObj.life=pObj.life-oppObj.power;
-        updateStats(pObj,"Player");
-        updateStats(oppObj,"Opp");
-        setTimeout(function(){
-            $("#lifePlayer").css("background-color", "red");
-        });
-        setTimeout(function(){
-            if(pObj.life<=0){
-            lose();
-            };
-        }, 3000);
-        
-    }
+    
 
     function attack(){
         console.log("ppooop");
