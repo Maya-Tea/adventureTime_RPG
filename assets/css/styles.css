@@ -1,0 +1,338 @@
+
+html{
+	height:100%;
+	overflow: auto;
+}
+body{
+	height:100%;
+	overflow: auto;
+	margin:0;
+}
+button{
+		font-size:30px;
+		font-style:font-family: 'IM Fell English SC', serif;
+		margin:50px;
+
+	}
+#wrapper{
+	clear:both;
+	overflow:auto;
+	background-image: url("../images/treeHouse.jpg");
+	background-size:100% 100%;
+	position:fixed;
+	top:0;
+	left:0;
+	width:100%;
+	height:100%;
+}
+#playerWeap{
+	position:absolute; 
+	top:50px; 
+	left: 0px; 
+	height: 100px;
+	opacity:0;
+}
+#oppWeap{
+	position:absolute; 
+	top:50px; 
+	left: 0px; 
+	height: 100px;
+	opacity:0;
+}
+
+#players1{
+	display:flex;
+	justify-content: space-around;
+	background-color:rgba(244,252,95,.1);
+	
+}
+#players2{
+	display:flex;
+	justify-content: space-around;
+	background-color:rgba(244,252,95,.1);
+	
+}
+.preFightDiv{
+	/*height:200px;
+	width:200px;*/
+	margin:0;
+	text-align:center;
+	font-family: 'IM Fell English SC', serif;
+	position:relative;
+	padding-left:20px;
+	padding-right:20px;
+	margin:0px;
+	margin-top:10px;
+	cursor:pointer;
+}
+.preFightPic{
+	max-width:100%;
+	height:auto;
+}
+
+#containerFight{
+	
+	display:flex;
+	justify-content: space-between;
+	margin-left:20px;
+	margin-right:20px;
+	position:relative;
+	align-items: flex-end;
+	width:calc(100% - 40px);
+	height:400px;
+	background-size:100% 400px;
+	box-shadow: 2px 2px 5px black;
+
+	
+}
+#fightArea{
+	width:100%;
+	height:auto;
+}
+
+#chosenOpponent{
+	/*display:flex;
+	align-items: center;*/
+	position:relative;
+	height:auto;
+	width: 200px;
+	text-align:center;
+	
+}
+
+#chosenFighter{
+	/*display:flex;
+	align-items: center;*/
+	position:relative;
+	height:auto;
+	width:200px;
+	text-align:center;
+		
+}
+.fightRowPic{
+	width:100%;
+	height:auto;
+}
+#containerRemaining{
+	margin:0;
+	width:100%;
+	height:auto;
+	display:flex;
+	justify-content: center;
+	text-align:center;
+/*	flex-wrap:wrap;*/
+}
+.remDiv{
+	max-width:150px;
+	height:auto;
+}
+
+
+.img-hor {
+        -moz-transform: scaleX(-1);
+        -o-transform: scaleX(-1);
+        -webkit-transform: scaleX(-1);
+        transform: scaleX(-1);
+        filter: FlipH;
+        -ms-filter: "FlipH";
+}
+
+
+h1{
+	color:rgb(58, 41, 38);
+	font-size:55px;
+	text-align:center;
+	font-family: 'IM Fell English SC', serif;
+	margin-top:60px;
+	margin-bottom:40px;
+	text-shadow: 0 2px 3px rgb(165, 134, 71);
+}
+
+.charLabel{
+	width:auto;
+	font-size: 15px;
+	text-align:center;
+	background-color:lightblue;
+	opacity:.7;
+	position:relative;
+	top:-75px;
+	margin:0px;
+}
+.preFightDiv:hover > .charLabel{
+		opacity:1;
+	}
+}
+.charLabel:hover{
+	opacity:1;
+}
+.command{
+	/*z-index:1;*/
+	text-align: center;
+}
+
+.name{
+	font-size: 18px;
+}
+h2{
+	text-align: center;
+	font-size: 30pt;
+	font-family: 'IM Fell English SC', serif;
+	text-shadow: 0 2px 3px rgb(165, 134, 71);
+}
+#land{
+	display:flex;
+	flex-wrap: wrap;
+	
+	height:auto;
+	margin:0;
+	width:100%;
+	
+	justify-content: space-around;
+	text-align:center;
+}
+.landPick{
+	flex: 1 1 33.33%; 
+	
+	height:150px;
+	/*width:auto;*/
+
+}
+/*.infoDiv{
+	background-color: "white";
+}*/
+.fighterLife{
+	background-color:white;
+	font-size: 20px; 
+}
+.fighterPower{
+	background-color:white;
+	font-size: 20px;
+}
+.fighterName{
+	background-color:white;
+	font-size: 20px;
+}
+
+@media screen and (max-width: 992px) {
+	/*.charLabel{
+		top:3px;
+	}*/
+}
+@media screen and (max-width: 750px) {
+	.charLabel{
+		top:2px;
+	}
+	.remDiv{
+		padding:10px;
+	}
+	#chosenFighter{
+		width:150px;
+	}
+	#chosenOpponent{
+		width:150px;
+	}
+	
+	h2{
+		font-size:20pt;
+	}
+	.fighterLife{
+	
+		font-size: 15px; 
+	}
+	.fighterPower{
+	
+		font-size: 15px;
+	}
+	.fighterName{
+	
+		font-size: 15px;
+	}
+
+	
+	/*#containerRemaining{
+		flex-wrap: wrap
+	}*/
+	
+
+
+}
+
+@media screen and (max-width: 496px) {
+	.charLabel{
+		top:1px;
+	}
+	#containerRemaining{
+		flex-wrap: wrap;
+	}
+
+	.remDiv{
+		
+		max-width:12=50px;
+	}
+	h2{
+		font-size:15pt;
+	}
+	
+
+	h1{
+		font-size:30pt;
+	}
+	#players1{
+		flex-wrap:wrap;
+	}
+	#players2{
+		flex-wrap: wrap;
+	}
+	#chosenFighter{
+		width:120px;
+	}
+	#chosenOpponent{
+		width:120px;
+	}
+	.fighterLife{
+	
+		font-size: 12px; 
+	}
+	.fighterPower{
+	
+		font-size: 12px;
+	}
+	.fighterName{
+	
+		font-size: 12px;
+	}
+	
+	
+
+	
+
+}
+
+@media screen and (max-width: 350px) {
+	.charLabel{
+		top:1px;
+	}
+	#chosenFighter {
+		
+		width:100px;
+	}
+	#chosenOpponent{
+		
+		width:100px;
+	}
+	.remDiv{
+		padding:10px;
+		max-width:100px;
+	}
+	
+	
+	h1{
+		font-size:20pt;
+	}
+	
+
+	
+
+
+}
+
